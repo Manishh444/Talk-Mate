@@ -1,7 +1,11 @@
 const express = require('express');
 const { chats } = require('./data/data');
+const dotenv = require('dotenv');
+const connectDB = require('./congif/db');
 
 const app = express();
+dotenv.config();
+connectDB()
 
 app.get('/', (req, res)=>{
     res.send("hello users")
