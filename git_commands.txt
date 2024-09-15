@@ -1,0 +1,33 @@
+# Run the below commands in root directory
+step 1: git init
+
+setp 2: git remote add origin git@github.com:Manishh444/Talk-Mate.git
+
+step 3: touch .gitignore and add template for MERN stack project
+
+step 4: add identity
+
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+  git config --global user.email "manishbhardwaj131149@gmail.com"
+
+    git config --global user.name "Manishh444"
+
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: empty ident name (for <manishdell@DESKTOP-BMAJF7P.>) not allowed
+
+step 4: git add && git commit -m "initial commit"
+
+step 5:  git config pull.rebase true // this step in not necessary if your github is in sync with local
+
+step 6: 
