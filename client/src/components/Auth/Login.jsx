@@ -94,7 +94,7 @@ const Login = () => {
         <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
-            type={"password"}
+            type={show ? "text" : "password"}
             placeholder="Password"
             _placeholder={{ color: "rgb(81, 84, 81)" }}
             value={password}

@@ -2,16 +2,23 @@ const express = require('express');
 const { chats } = require('./data/data');
 const dotenv = require('dotenv');
 const connectDB = require('./congif/db');
+const { errorHandler, notFound } = require("./middleware/errorMiddleware");
 
-const app = express();
+
+//-----------Routes------------------------------
+const userRoutes = require('./routes/userRoutes')
+
+//-----------Data Base connection---------------
 dotenv.config();
-connectDB()
+connectDB();
 
-app.get('/', (req, res)=>{
-    res.send("hello users")
-})
+//-----------API Routes-------------------------
+const app = express();
+app.use(express.json())
+app.use('/api/users', userRoutes)
+app.use(notFound);
+app.use(errorHandler);
 
-app.get('/api/chats', (req, res)=>{
-    res.send(chats)
-})
-app.listen(5000, console.log("server is listenin at port 5000"))
+
+const PORT = process.env.PORT
+app.listen(PORT, console.log("server is listenin at port",PORT))
