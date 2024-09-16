@@ -160,7 +160,7 @@ const removeFromGroup = asyncHandler(async (req, res) => {
     res.json(removed);
   }
 });
-
+// Could not create request.
 // @desc    Add user to Group / Leave
 // @route   PUT /api/chat/groupadd
 // @access  Protected
