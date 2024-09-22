@@ -1,9 +1,29 @@
-import React from 'react'
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+const ChatContext = createContext();
 
-const ChatProvider = () => {
+const ChatProvider = ({ children }) => {
+  const [user, setUser] = useState();
+  const [selectedChat, setselectedChat] = useState();
+  const [chats, setChats] = useState([]);
+  const Navigate = useNavigate();
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(userInfo);
+    if (!userInfo) {
+      Navigate("/");
+    }
+  }, [Navigate]);
   return (
-    <div>ChatProvider</div>
-  )
-}
+    <ChatContext.Provider
+      value={{ user, setUser, selectedChat, setselectedChat, chats, setChats }}>
+      {children}
+    </ChatContext.Provider>
+  );
+};
 
-export default ChatProvider
+export const ChatState = () => {
+  return useContext(ChatContext);
+};
+
+export default ChatProvider;

@@ -12,18 +12,18 @@ import React, { useEffect } from "react";
 import Login from "../components/Auth/Login";
 import SignUp from "../components/Auth/SignUp";
 import { useNavigate } from "react-router-dom";
-// import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../context/ChatProvider";
 
 const HomePage = () => {
-  //   const { user, setUser } = ChatState();
+    const { user, setUser } = ChatState();
   const Navigate = useNavigate();
-  //   useEffect(() => {
-  //     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  //     setUser(userInfo);
-  //     if (userInfo) {
-  //       Navigate("/chats");
-  //     }
-  //   }, [Navigate]);
+    useEffect(() => {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      setUser(userInfo);
+      if (userInfo) {
+        Navigate("/chats");
+      }
+    }, [Navigate]);
   return (
     <Container maxW={"sm"} centerContent>
       <Box

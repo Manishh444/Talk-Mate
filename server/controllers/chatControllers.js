@@ -3,7 +3,7 @@ const Chat = require("../../database/models/chatModel");
 const User = require("../../database/models/userModel");
 const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
-  // console.log(req.body)
+  //console.log(req.body)
   if (!userId) {
     console.log("userId param not sent with request");
     return res.sendStatus(400);
@@ -50,6 +50,12 @@ const accessChat = asyncHandler(async (req, res) => {
 // @description     Fetch all chats for a user
 //@route           GET /api/chat/
 //@access          Protected
+
+
+/**
+ * 
+ * how fetchChats works is it look for all the chats inside chat column for particular user who is querying over it
+ */
 const fetchChats = asyncHandler(async (req, res) => {
   try {
     Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
