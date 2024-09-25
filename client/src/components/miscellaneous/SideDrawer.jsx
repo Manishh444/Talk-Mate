@@ -29,6 +29,11 @@ import ChatLoading from "../ChatComponents/ChatLoading";
 import axios from "axios";
 import UserListItem from "../userAvatar/UserListItem";
 import { Spinner } from "@chakra-ui/spinner";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
+import { getSender } from "../../config/ChatLogics";
+
+
 
 const SideDrawer = () =>  {
   const [search, setSearch] = useState("");
@@ -39,7 +44,15 @@ const SideDrawer = () =>  {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
-  const { user, setUser, setselectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setUser,
+    setselectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
   const Navigate = useNavigate();
 
   const logoutHandler = () => {
@@ -135,9 +148,28 @@ const SideDrawer = () =>  {
         <div>
           <Menu>
             <MenuButton>
+              <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              />
               <BellIcon fontSize={"2xl"} m={2} />
             </MenuButton>
-            <MenuList></MenuList>
+            <MenuList pl={2}>
+              {" "}
+              {!notification.length && "No New Messages"}
+              {notification.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((n) => n !== notif));
+                  }}>
+                  {notif.chat.isGroupChat
+                    ? `New Message in ${notif.chat.chatName}`
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
             <Menu>
               <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                 <Avatar
