@@ -3,7 +3,7 @@ const { chats } = require('./data/data');
 const dotenv = require('dotenv');
 const connectDB = require('./congif/db');
 const { errorHandler, notFound } = require("./middleware/errorMiddleware");
-
+const path = require('path')
 
 //-----------Routes------------------------------
 const userRoutes = require('./routes/userRoutes')
@@ -28,7 +28,25 @@ app.use('/api/chats', chatRoutes)
 //-----------message API route---------------------------
 app.use("/api/messages", messageRoutes);
 
+//------------------Deployment code start--------------------------
 
+const __MyDirname = path.resolve();
+
+if(process.env.NODE_ENV === 'prod'){
+    app.use(express.static(path.join(__MyDirname, "client/dist")))
+    app.get('*', (req, res)=>{
+        res.sendFile(path.resolve(__MyDirname, "client","dist", "index.html"))
+    })
+}else {
+    app.get('/', (req, res)=>{
+        res.send("API RUNNING SUCCESSFULLY")
+    })
+}
+
+
+
+
+//------------------Deployment code end--------------------------
 
 app.use(notFound);
 app.use(errorHandler);
